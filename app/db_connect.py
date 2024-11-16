@@ -27,5 +27,17 @@ def get_post_id(post_id):
     return data
 
 def write_data(title, body):
-    _, cursor = connect_db()
+    connect, cursor = connect_db()
     cursor.execute('INSERT INTO posts (title, body) VALUES (?, ?)', (title, body))
+    connect.commit()
+
+def update_data(post_id, title, body):
+    connect, cursor = connect_db()
+    cursor.execute('UPDATE posts SET title=?, body=? WHERE id=?', (title, body, post_id))
+    connect.commit()
+
+
+def delete_data(post_id):
+    connect, cursor = connect_db()
+    cursor.execute('DELETE FROM posts WHERE id=?', (post_id,))
+    connect.commit()
